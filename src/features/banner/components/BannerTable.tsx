@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, Paper, TableSortLabel, Theme } from '@mui/material';
+import { IconButton, Paper, Theme } from '@mui/material';
 import { red } from '@mui/material/colors';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
 import CommonDialog from 'components/Common/CommonDialog';
 import { useToggle } from 'hooks';
+import { Banner } from 'models/banner';
 import { useState } from 'react';
-import { Reason } from 'models/reason';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -21,24 +21,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface ReasonTableProps {
-  reasonList: Reason[];
-  onEdit?: (reason: Reason) => void;
-  onRemove?: (reason: Reason) => void;
+export interface BannerTableProps {
+  bannerList: Banner[];
+  onEdit?: (banner: Banner) => void;
+  onRemove?: (banner: Banner) => void;
 }
 
-export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTableProps) {
+export default function BannerTable({ bannerList, onEdit, onRemove }: BannerTableProps) {
   const classes = useStyles();
   const [open, toggle] = useToggle();
-  const [selectedReason, setSelectedReason] = useState<Reason>();
+  const [selectedBanner, setSelectedBanner] = useState<Banner>();
 
-  const handleRemoveClick = (reason: Reason) => {
-    setSelectedReason(reason);
+  const handleRemoveClick = (banner: Banner) => {
+    setSelectedBanner(banner);
     toggle(true);
   };
 
-  const handleRemoveConfirm = (reason: Reason) => {
-    onRemove?.(reason);
+  const handleRemoveConfirm = (banner: Banner) => {
+    onRemove?.(banner);
     toggle(false);
   };
 
@@ -57,13 +57,13 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
           </TableHead>
 
           <TableBody>
-            {reasonList?.length ? (
-              reasonList.map((reason, index) => (
-                <TableRow key={reason.id}>
+            {bannerList?.length ? (
+              bannerList.map((banner, index) => (
+                <TableRow key={banner.id}>
                   <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="center">{reason.header}</TableCell>
-                  <TableCell align="center">{reason.img}</TableCell>
-                  <TableCell align="center">{reason.desc}</TableCell>
+                  <TableCell align="center">{banner.header}</TableCell>
+                  <TableCell align="center">{banner.img}</TableCell>
+                  <TableCell align="center">{banner.desc}</TableCell>
 
                   <TableCell
                     sx={{
@@ -72,14 +72,14 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
                       justifyContent: 'flex-end',
                       alignItems: 'center',
                     }}>
-                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(reason)}>
+                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(banner)}>
                       <EditIcon />
                     </IconButton>
 
                     <IconButton
                       aria-label="delete"
                       sx={{ color: red[500] }}
-                      onClick={() => handleRemoveClick(reason)}>
+                      onClick={() => handleRemoveClick(banner)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -99,7 +99,7 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
       <CommonDialog
         open={open}
         onClose={toggle}
-        item={selectedReason}
+        item={selectedBanner}
         onConfirm={handleRemoveConfirm}
         mainMessage={'Xóa banner'}
         subMessage={'Bạn có muốn xóa banner không?'}

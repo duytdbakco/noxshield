@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, Paper, TableSortLabel, Theme } from '@mui/material';
+import { IconButton, Paper, Theme } from '@mui/material';
 import { red } from '@mui/material/colors';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,7 +12,7 @@ import { makeStyles } from '@mui/styles';
 import CommonDialog from 'components/Common/CommonDialog';
 import { useToggle } from 'hooks';
 import { useState } from 'react';
-import { Reason } from 'models/reason';
+import { Case } from 'models/case';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -21,24 +21,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface ReasonTableProps {
-  reasonList: Reason[];
-  onEdit?: (reason: Reason) => void;
-  onRemove?: (reason: Reason) => void;
+export interface CaseTableProps {
+  caseList: Case[];
+  onEdit?: (cases: Case) => void;
+  onRemove?: (cases: Case) => void;
 }
 
-export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTableProps) {
+export default function CaseTable({ caseList, onEdit, onRemove }: CaseTableProps) {
   const classes = useStyles();
   const [open, toggle] = useToggle();
-  const [selectedReason, setSelectedReason] = useState<Reason>();
+  const [selectedCase, setSelectedCase] = useState<Case>();
 
-  const handleRemoveClick = (reason: Reason) => {
-    setSelectedReason(reason);
+  const handleRemoveClick = (cases: Case) => {
+    setSelectedCase(cases);
     toggle(true);
   };
 
-  const handleRemoveConfirm = (reason: Reason) => {
-    onRemove?.(reason);
+  const handleRemoveConfirm = (cases: Case) => {
+    onRemove?.(cases);
     toggle(false);
   };
 
@@ -57,13 +57,13 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
           </TableHead>
 
           <TableBody>
-            {reasonList?.length ? (
-              reasonList.map((reason, index) => (
-                <TableRow key={reason.id}>
+            {caseList?.length ? (
+              caseList.map((cases, index) => (
+                <TableRow key={cases.id}>
                   <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="center">{reason.header}</TableCell>
-                  <TableCell align="center">{reason.img}</TableCell>
-                  <TableCell align="center">{reason.desc}</TableCell>
+                  <TableCell align="center">{cases.header}</TableCell>
+                  <TableCell align="center">{cases.img}</TableCell>
+                  <TableCell align="center">{cases.desc}</TableCell>
 
                   <TableCell
                     sx={{
@@ -72,14 +72,14 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
                       justifyContent: 'flex-end',
                       alignItems: 'center',
                     }}>
-                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(reason)}>
+                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(cases)}>
                       <EditIcon />
                     </IconButton>
 
                     <IconButton
                       aria-label="delete"
                       sx={{ color: red[500] }}
-                      onClick={() => handleRemoveClick(reason)}>
+                      onClick={() => handleRemoveClick(cases)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -99,10 +99,10 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
       <CommonDialog
         open={open}
         onClose={toggle}
-        item={selectedReason}
+        item={selectedCase}
         onConfirm={handleRemoveConfirm}
-        mainMessage={'Xóa banner'}
-        subMessage={'Bạn có muốn xóa banner không?'}
+        mainMessage={'Xóa case'}
+        subMessage={'Bạn có muốn xóa case không?'}
       />
     </>
   );

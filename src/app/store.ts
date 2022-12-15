@@ -3,6 +3,11 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import authReducer from 'features/auth/authSlice';
 import profileReducer from 'features/profile/profileSlice';
 import reasonReducer from 'features/reason/reasonSlice';
+import bannerReducer from 'features/banner/bannerSlice';
+import producerReducer from 'features/producer/producerSlice';
+import contentReducer from 'features/content/contentSlice';
+import caseReducer from 'features/case/caseSlice';
+
 import { combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { history } from 'utils';
@@ -13,6 +18,10 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   reason: reasonReducer,
+  banner: bannerReducer,
+  producer: producerReducer,
+  content: contentReducer,
+  case: caseReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

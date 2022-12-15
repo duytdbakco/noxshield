@@ -7,11 +7,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import { Reason } from 'models/reason';
-import reasonApi from 'api/reasonApi';
-import { reasonActions, selectReasonFilter } from '../reasonSlice';
-export interface ReasonFormProps {
-  initialValues?: Reason;
+import { Banner } from 'models/banner';
+import bannerApi from 'api/bannerApi';
+import { bannerActions, selectBannerFilter } from '../bannerSlice';
+import { useParams } from 'react-router-dom';
+export interface BannerFormProps {
+  initialValues?: Banner;
   onClose: () => void;
 }
 
@@ -21,36 +22,37 @@ const schema = yup.object().shape({
   desc: yup.string().required('Vui lòng nhập mô tả'),
 });
 
-export default function ReasonForm({ initialValues, onClose }: ReasonFormProps): JSX.Element {
+export default function BannerForm({ initialValues, onClose }: BannerFormProps): JSX.Element {
   const [error, setError] = useState<string>('');
   const isEdit = Boolean(initialValues?.id);
   const dispatch = useAppDispatch();
-  const filter = useAppSelector(selectReasonFilter);
+  const filter = useAppSelector(selectBannerFilter);
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<Reason>({
+  } = useForm<Banner>({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
 
-  const handleReasonFormSubmit = async (formValues: Reason) => {
+  const handleBannerFormSubmit = async (formValues: any) => {
     if (isEdit) {
-      await reasonApi.update(formValues);
+      await bannerApi.update(formValues);
       toast.success('Cập nhật banner thành công!');
     } else {
-      await reasonApi.add(formValues);
+      await bannerApi.add(formValues);
       toast.success('Thêm banner thành công!');
+      console.log(formValues);
     }
-    dispatch(reasonActions.fetchReasonList(filter));
+    dispatch(bannerActions.fetchBannerList(filter));
     onClose();
   };
 
   return (
     <Box maxWidth={400}>
-      <form onSubmit={handleSubmit(handleReasonFormSubmit)}>
+      <form onSubmit={handleSubmit(handleBannerFormSubmit)}>
         <InputField name="header" control={control} placeholder="Nhập tiêu đề" label="Tiêu đề" />
 
         <InputField name="img" control={control} placeholder="Upload ảnh" label="Ảnh*" />

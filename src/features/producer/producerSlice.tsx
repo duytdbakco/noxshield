@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListParams, PaginationParams } from 'models';
-import { Reason } from 'models/reason';
+import { ListParams } from 'models';
+import { Producer } from 'models/producer';
 import { RootState } from '../../app/store';
 
-export interface ReasonState {
+export interface ProducerState {
   loading: boolean;
-  list: Reason[];
+  list: Producer[];
   error?: string;
   filter: ListParams;
   pageCount: number;
 }
 
-const initialState: ReasonState = {
+const initialState: ProducerState = {
   loading: false,
   list: [],
   filter: {
@@ -24,19 +24,19 @@ const initialState: ReasonState = {
   pageCount: 4,
 };
 
-const reasonSlice = createSlice({
-  name: 'reason',
+const producerSlice = createSlice({
+  name: 'producer',
   initialState,
   reducers: {
-    fetchReasonList(state, action: PayloadAction<ListParams>) {
+    fetchProducerList(state, action: PayloadAction<ListParams>) {
       state.loading = true;
     },
-    fetchReasonListSuccess(state, action: PayloadAction<any>) {
+    fetchProducerListSuccess(state, action: PayloadAction<any>) {
       state.list = action.payload;
       state.pageCount = action.payload.length;
       state.loading = false;
     },
-    fetchReasonListFailed(state) {
+    fetchProducerListFailed(state) {
       state.loading = false;
       state.error = 'err';
     },
@@ -55,13 +55,13 @@ const reasonSlice = createSlice({
 });
 
 // actions
-export const reasonActions = reasonSlice.actions;
+export const producerActions = producerSlice.actions;
 
 // selectors
-export const selectReasonList = (state: RootState) => state.reason.list;
-export const selectReasonLoading = (state: RootState) => state.reason.loading;
-export const selectReasonFilter = (state: RootState) => state.reason.filter;
-export const selectReasonPageCount = (state: RootState) => state.reason.pageCount;
+export const selectProducerList = (state: RootState) => state.producer.list;
+export const selectProducerLoading = (state: RootState) => state.producer.loading;
+export const selectProducerFilter = (state: RootState) => state.producer.filter;
+export const selectProducerPageCount = (state: RootState) => state.producer.pageCount;
 // reducers
-const reasonReducer = reasonSlice.reducer;
-export default reasonReducer;
+const producerReducer = producerSlice.reducer;
+export default producerReducer;

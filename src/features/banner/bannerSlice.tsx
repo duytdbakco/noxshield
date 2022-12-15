@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListParams, PaginationParams } from 'models';
-import { Reason } from 'models/reason';
+import { Banner } from 'models/banner';
 import { RootState } from '../../app/store';
 
-export interface ReasonState {
+export interface BannerState {
   loading: boolean;
-  list: Reason[];
+  list: Banner[];
   error?: string;
   filter: ListParams;
   pageCount: number;
 }
 
-const initialState: ReasonState = {
+const initialState: BannerState = {
   loading: false,
   list: [],
   filter: {
@@ -24,19 +24,19 @@ const initialState: ReasonState = {
   pageCount: 4,
 };
 
-const reasonSlice = createSlice({
-  name: 'reason',
+const bannerSlice = createSlice({
+  name: 'banner',
   initialState,
   reducers: {
-    fetchReasonList(state, action: PayloadAction<ListParams>) {
+    fetchBannerList(state, action: PayloadAction<ListParams>) {
       state.loading = true;
     },
-    fetchReasonListSuccess(state, action: PayloadAction<any>) {
+    fetchBannerListSuccess(state, action: PayloadAction<any>) {
       state.list = action.payload;
       state.pageCount = action.payload.length;
       state.loading = false;
     },
-    fetchReasonListFailed(state) {
+    fetchBannerListFailed(state) {
       state.loading = false;
       state.error = 'err';
     },
@@ -55,13 +55,13 @@ const reasonSlice = createSlice({
 });
 
 // actions
-export const reasonActions = reasonSlice.actions;
+export const bannerActions = bannerSlice.actions;
 
 // selectors
-export const selectReasonList = (state: RootState) => state.reason.list;
-export const selectReasonLoading = (state: RootState) => state.reason.loading;
-export const selectReasonFilter = (state: RootState) => state.reason.filter;
-export const selectReasonPageCount = (state: RootState) => state.reason.pageCount;
+export const selectBannerList = (state: RootState) => state.banner.list;
+export const selectBannerLoading = (state: RootState) => state.banner.loading;
+export const selectBannerFilter = (state: RootState) => state.banner.filter;
+export const selectBannerPageCount = (state: RootState) => state.banner.pageCount;
 // reducers
-const reasonReducer = reasonSlice.reducer;
-export default reasonReducer;
+const bannerReducer = bannerSlice.reducer;
+export default bannerReducer;

@@ -1,4 +1,4 @@
-export interface Banner {
+export interface Content {
   id?: string;
   header: string;
   desc: string;

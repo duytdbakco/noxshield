@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import reasonApi from 'api/reasonApi';
+import producerApi from 'api/producerApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -26,19 +26,19 @@ import { FileUploaded } from 'components/Common';
 import { CommonButton } from 'components/Common/CommonButton';
 import Popup from 'components/Common/PopUp';
 import { ListParams } from 'models';
-import { Reason } from 'models/reason';
+import { Producer } from 'models/producer';
 import React, { ChangeEvent, DragEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import ReasonFilter from '../components/ReasonFilter';
-import ReasonForm from '../components/ReasonForm';
-import ReasonTable from '../components/ReasonTable';
+import ProducerFilter from '../components/ProducerFilter';
+import ProducerForm from '../components/ProducerForm';
+import ProducerTable from '../components/ProducerTable';
 import {
-  reasonActions,
-  selectReasonFilter,
-  selectReasonList,
-  selectReasonLoading,
-  selectReasonPageCount,
-} from '../reasonSlice';
+  producerActions,
+  selectProducerFilter,
+  selectProducerList,
+  selectProducerLoading,
+  selectProducerPageCount,
+} from '../producerSlice';
 
 const theme = createTheme({});
 
@@ -67,71 +67,71 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ReasonPage() {
+export default function ProducerPage() {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const reasonList = useAppSelector(selectReasonList);
-  const pageCount = useAppSelector(selectReasonPageCount);
+  const producerList = useAppSelector(selectProducerList);
+  const pageCount = useAppSelector(selectProducerPageCount);
 
-  const filter = useAppSelector(selectReasonFilter);
-  const loading = useAppSelector(selectReasonLoading);
+  const filter = useAppSelector(selectProducerFilter);
+  const loading = useAppSelector(selectProducerLoading);
 
   const [openPopup, setOpenPopup] = useState(false);
-  const [reason, setReason] = useState<Reason>();
+  const [producer, setProducer] = useState<Producer>();
 
-  const initialValues: Reason = {
+  const initialValues: Producer = {
     header: '',
     img: '',
     desc: '',
-    ...reason,
-  } as Reason;
+    ...producer,
+  } as Producer;
 
   const dispatch = useAppDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(reasonActions.fetchReasonList(filter));
+    dispatch(producerActions.fetchProducerList(filter));
   }, [dispatch, filter]);
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
-      reasonActions.setFilter({
+      producerActions.setFilter({
         ...filter,
         _limit: parseInt(event.target.value, 10),
       })
     );
   };
   const handleFilterChange = (newFilter: ListParams) => {
-    dispatch(reasonActions.setFilter(newFilter));
+    dispatch(producerActions.setFilter(newFilter));
   };
   const handleSearchChange = (newFilter: ListParams) => {
-    dispatch(reasonActions.setFilterWithDebounce(newFilter));
+    dispatch(producerActions.setFilterWithDebounce(newFilter));
   };
   const handlePageChange = (_page: number) => {
     dispatch(
-      reasonActions.setFilter({
+      producerActions.setFilter({
         ...filter,
         _page,
       })
     );
   };
 
-  const handleRemoveReason = async (reason: Reason) => {
+  const handleRemoveProducer = async (producer: Producer) => {
     try {
       // Remove pri API
-      await reasonApi.remove(reason?.id || '');
+      await producerApi.remove(producer?.id || '');
 
-      toast.success(' Xóa banner thành công!');
+      toast.success(' Xóa producer thành công!');
 
       const newFilter = { ...filter };
-      dispatch(reasonActions.fetchReasonList(newFilter));
+      dispatch(producerActions.fetchProducerList(newFilter));
     } catch (error) {
       // Toast error
-      console.log('Failed to fetch reason', error);
+      console.log('Failed to fetch producer', error);
     }
   };
-  const handleEditReason = async (reason: Reason) => {
-    setReason(reason);
+  const handleEditProducer = async (producer: Producer) => {
+    setProducer(producer);
     setOpenPopup(true);
   };
   const [selectedFile, setSelectedFile] = useState<File>();
@@ -145,12 +145,12 @@ export default function ReasonPage() {
       <Container>
         <Box className={classes.titleContainer}>
           <Typography component="h1" variant="h5" fontWeight="bold">
-            Danh Sách banner
+            Danh Sách Producer
           </Typography>
         </Box>
         <Grid container mb={3}>
           <Grid xs={8} width="100%" md={8}>
-            <ReasonFilter
+            <ProducerFilter
               filter={filter}
               onChange={handleFilterChange}
               onSearchChange={handleSearchChange}
@@ -185,10 +185,10 @@ export default function ReasonPage() {
           </Grid>
         </Grid>
         {loading && <LinearProgress className={classes.loading} />}
-        <ReasonTable
-          reasonList={reasonList}
-          onEdit={handleEditReason}
-          onRemove={handleRemoveReason}
+        <ProducerTable
+          producerList={producerList}
+          onEdit={handleEditProducer}
+          onRemove={handleRemoveProducer}
         />
 
         <Box my={2} display="flex" justifyContent="space-between" alignItems="center">
@@ -334,9 +334,9 @@ export default function ReasonPage() {
                 variant="contained"
                 onClick={async () => {
                   if (selectedFile) {
-                    dispatch(reasonActions.setLoading(true));
+                    dispatch(producerActions.setLoading(true));
                     try {
-                      const response = await reasonApi.importFile(selectedFile);
+                      const response = await producerApi.importFile(selectedFile);
                       if (response.succeed) {
                         setOpenDrawer(false);
                         toast.success('Import Succeed'.toString());
@@ -346,7 +346,7 @@ export default function ReasonPage() {
                       console.log(error);
                       toast.error('Import fail'.toString());
                     }
-                    dispatch(reasonActions.setLoading(false));
+                    dispatch(producerActions.setLoading(false));
                   }
                 }}>
                 {'Upload'}
@@ -356,14 +356,14 @@ export default function ReasonPage() {
         </Drawer>
 
         <Popup
-          title={initialValues?.id ? 'Cập nhật nội dung banner' : 'Thêm nội dung banner'}
+          title={initialValues?.id ? 'Cập nhật nội dung producer' : 'Thêm nội dung producer'}
           subtitle="Vui lòng nhập đầy đủ các thông tin vào ô bên dưới"
           openPopUp={openPopup}
           onClose={() => {
             setOpenPopup(false);
-            setReason(undefined);
+            setProducer(undefined);
           }}>
-          <ReasonForm onClose={() => setOpenPopup(false)} initialValues={initialValues} />
+          <ProducerForm onClose={() => setOpenPopup(false)} initialValues={initialValues} />
         </Popup>
       </Container>
     </ThemeProvider>

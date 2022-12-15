@@ -1,4 +1,4 @@
-export interface Banner {
+export interface Case {
   id?: string;
   header: string;
   desc: string;

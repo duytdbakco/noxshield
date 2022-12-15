@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, Paper, TableSortLabel, Theme } from '@mui/material';
+import { IconButton, Paper, Theme } from '@mui/material';
 import { red } from '@mui/material/colors';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
 import CommonDialog from 'components/Common/CommonDialog';
 import { useToggle } from 'hooks';
+import { Content } from 'models/content';
 import { useState } from 'react';
-import { Reason } from 'models/reason';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -21,24 +21,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface ReasonTableProps {
-  reasonList: Reason[];
-  onEdit?: (reason: Reason) => void;
-  onRemove?: (reason: Reason) => void;
+export interface ContentTableProps {
+  contentList: Content[];
+  onEdit?: (Content: Content) => void;
+  onRemove?: (Content: Content) => void;
 }
 
-export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTableProps) {
+export default function ContentTable({ contentList, onEdit, onRemove }: ContentTableProps) {
   const classes = useStyles();
   const [open, toggle] = useToggle();
-  const [selectedReason, setSelectedReason] = useState<Reason>();
+  const [selectedContent, setSelectedContent] = useState<Content>();
 
-  const handleRemoveClick = (reason: Reason) => {
-    setSelectedReason(reason);
+  const handleRemoveClick = (content: Content) => {
+    setSelectedContent(content);
     toggle(true);
   };
 
-  const handleRemoveConfirm = (reason: Reason) => {
-    onRemove?.(reason);
+  const handleRemoveConfirm = (content: Content) => {
+    onRemove?.(content);
     toggle(false);
   };
 
@@ -57,13 +57,13 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
           </TableHead>
 
           <TableBody>
-            {reasonList?.length ? (
-              reasonList.map((reason, index) => (
-                <TableRow key={reason.id}>
+            {contentList?.length ? (
+              contentList.map((content, index) => (
+                <TableRow key={content.id}>
                   <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="center">{reason.header}</TableCell>
-                  <TableCell align="center">{reason.img}</TableCell>
-                  <TableCell align="center">{reason.desc}</TableCell>
+                  <TableCell align="center">{content.header}</TableCell>
+                  <TableCell align="center">{content.img}</TableCell>
+                  <TableCell align="center">{content.desc}</TableCell>
 
                   <TableCell
                     sx={{
@@ -72,14 +72,14 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
                       justifyContent: 'flex-end',
                       alignItems: 'center',
                     }}>
-                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(reason)}>
+                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(content)}>
                       <EditIcon />
                     </IconButton>
 
                     <IconButton
                       aria-label="delete"
                       sx={{ color: red[500] }}
-                      onClick={() => handleRemoveClick(reason)}>
+                      onClick={() => handleRemoveClick(content)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -99,10 +99,10 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
       <CommonDialog
         open={open}
         onClose={toggle}
-        item={selectedReason}
+        item={selectedContent}
         onConfirm={handleRemoveConfirm}
-        mainMessage={'Xóa banner'}
-        subMessage={'Bạn có muốn xóa banner không?'}
+        mainMessage={'Xóa content'}
+        subMessage={'Bạn có muốn xóa content không?'}
       />
     </>
   );

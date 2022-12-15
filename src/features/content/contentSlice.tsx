@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListParams, PaginationParams } from 'models';
-import { Reason } from 'models/reason';
+import { ListParams } from 'models';
+import { Content } from 'models/content';
 import { RootState } from '../../app/store';
 
-export interface ReasonState {
+export interface ContentState {
   loading: boolean;
-  list: Reason[];
+  list: Content[];
   error?: string;
   filter: ListParams;
   pageCount: number;
 }
 
-const initialState: ReasonState = {
+const initialState: ContentState = {
   loading: false,
   list: [],
   filter: {
@@ -24,19 +24,19 @@ const initialState: ReasonState = {
   pageCount: 4,
 };
 
-const reasonSlice = createSlice({
-  name: 'reason',
+const contentSlice = createSlice({
+  name: 'content',
   initialState,
   reducers: {
-    fetchReasonList(state, action: PayloadAction<ListParams>) {
+    fetchContentList(state, action: PayloadAction<ListParams>) {
       state.loading = true;
     },
-    fetchReasonListSuccess(state, action: PayloadAction<any>) {
+    fetchContentListSuccess(state, action: PayloadAction<any>) {
       state.list = action.payload;
       state.pageCount = action.payload.length;
       state.loading = false;
     },
-    fetchReasonListFailed(state) {
+    fetchContentListFailed(state) {
       state.loading = false;
       state.error = 'err';
     },
@@ -55,13 +55,13 @@ const reasonSlice = createSlice({
 });
 
 // actions
-export const reasonActions = reasonSlice.actions;
+export const contentActions = contentSlice.actions;
 
 // selectors
-export const selectReasonList = (state: RootState) => state.reason.list;
-export const selectReasonLoading = (state: RootState) => state.reason.loading;
-export const selectReasonFilter = (state: RootState) => state.reason.filter;
-export const selectReasonPageCount = (state: RootState) => state.reason.pageCount;
+export const selectContentList = (state: RootState) => state.content.list;
+export const selectContentLoading = (state: RootState) => state.content.loading;
+export const selectContentFilter = (state: RootState) => state.content.filter;
+export const selectContentPageCount = (state: RootState) => state.content.pageCount;
 // reducers
-const reasonReducer = reasonSlice.reducer;
-export default reasonReducer;
+const contentReducer = contentSlice.reducer;
+export default contentReducer;

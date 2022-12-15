@@ -4,3 +4,6 @@ export * from './common';
 export * from './serviceForm';
 export * from './banner';
 export * from './reason';
+export * from './producer';
+export * from './content';
+export * from './case';

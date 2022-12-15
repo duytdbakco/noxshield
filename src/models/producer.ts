@@ -1,4 +1,4 @@
-export interface Banner {
+export interface Producer {
   id?: string;
   header: string;
   desc: string;

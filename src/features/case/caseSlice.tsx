@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ListParams, PaginationParams } from 'models';
-import { Reason } from 'models/reason';
+import { ListParams } from 'models';
+import { Case } from 'models/case';
 import { RootState } from '../../app/store';
 
-export interface ReasonState {
+export interface CaseState {
   loading: boolean;
-  list: Reason[];
+  list: Case[];
   error?: string;
   filter: ListParams;
   pageCount: number;
 }
 
-const initialState: ReasonState = {
+const initialState: CaseState = {
   loading: false,
   list: [],
   filter: {
@@ -24,19 +24,19 @@ const initialState: ReasonState = {
   pageCount: 4,
 };
 
-const reasonSlice = createSlice({
-  name: 'reason',
+const caseSlice = createSlice({
+  name: 'case',
   initialState,
   reducers: {
-    fetchReasonList(state, action: PayloadAction<ListParams>) {
+    fetchCaseList(state, action: PayloadAction<ListParams>) {
       state.loading = true;
     },
-    fetchReasonListSuccess(state, action: PayloadAction<any>) {
+    fetchCaseListSuccess(state, action: PayloadAction<any>) {
       state.list = action.payload;
       state.pageCount = action.payload.length;
       state.loading = false;
     },
-    fetchReasonListFailed(state) {
+    fetchCaseListFailed(state) {
       state.loading = false;
       state.error = 'err';
     },
@@ -55,13 +55,13 @@ const reasonSlice = createSlice({
 });
 
 // actions
-export const reasonActions = reasonSlice.actions;
+export const caseActions = caseSlice.actions;
 
 // selectors
-export const selectReasonList = (state: RootState) => state.reason.list;
-export const selectReasonLoading = (state: RootState) => state.reason.loading;
-export const selectReasonFilter = (state: RootState) => state.reason.filter;
-export const selectReasonPageCount = (state: RootState) => state.reason.pageCount;
+export const selectCaseList = (state: RootState) => state.case.list;
+export const selectCaseLoading = (state: RootState) => state.case.loading;
+export const selectCaseFilter = (state: RootState) => state.case.filter;
+export const selectCasePageCount = (state: RootState) => state.case.pageCount;
 // reducers
-const reasonReducer = reasonSlice.reducer;
-export default reasonReducer;
+const caseReducer = caseSlice.reducer;
+export default caseReducer;

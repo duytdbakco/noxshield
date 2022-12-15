@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, Paper, TableSortLabel, Theme } from '@mui/material';
+import { IconButton, Paper, Theme } from '@mui/material';
 import { red } from '@mui/material/colors';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
 import CommonDialog from 'components/Common/CommonDialog';
 import { useToggle } from 'hooks';
+import { Producer } from 'models/producer';
 import { useState } from 'react';
-import { Reason } from 'models/reason';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -21,24 +21,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface ReasonTableProps {
-  reasonList: Reason[];
-  onEdit?: (reason: Reason) => void;
-  onRemove?: (reason: Reason) => void;
+export interface ProducerTableProps {
+  producerList: Producer[];
+  onEdit?: (producer: Producer) => void;
+  onRemove?: (producer: Producer) => void;
 }
 
-export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTableProps) {
+export default function ProducerTable({ producerList, onEdit, onRemove }: ProducerTableProps) {
   const classes = useStyles();
   const [open, toggle] = useToggle();
-  const [selectedReason, setSelectedReason] = useState<Reason>();
+  const [selectedProducer, setSelectedProducer] = useState<Producer>();
 
-  const handleRemoveClick = (reason: Reason) => {
-    setSelectedReason(reason);
+  const handleRemoveClick = (producer: Producer) => {
+    setSelectedProducer(producer);
     toggle(true);
   };
 
-  const handleRemoveConfirm = (reason: Reason) => {
-    onRemove?.(reason);
+  const handleRemoveConfirm = (producer: Producer) => {
+    onRemove?.(producer);
     toggle(false);
   };
 
@@ -57,13 +57,13 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
           </TableHead>
 
           <TableBody>
-            {reasonList?.length ? (
-              reasonList.map((reason, index) => (
-                <TableRow key={reason.id}>
+            {producerList?.length ? (
+              producerList.map((producer, index) => (
+                <TableRow key={producer.id}>
                   <TableCell align="center">{index + 1}</TableCell>
-                  <TableCell align="center">{reason.header}</TableCell>
-                  <TableCell align="center">{reason.img}</TableCell>
-                  <TableCell align="center">{reason.desc}</TableCell>
+                  <TableCell align="center">{producer.header}</TableCell>
+                  <TableCell align="center">{producer.img}</TableCell>
+                  <TableCell align="center">{producer.desc}</TableCell>
 
                   <TableCell
                     sx={{
@@ -72,14 +72,17 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
                       justifyContent: 'flex-end',
                       alignItems: 'center',
                     }}>
-                    <IconButton aria-label="edit" color="primary" onClick={() => onEdit?.(reason)}>
+                    <IconButton
+                      aria-label="edit"
+                      color="primary"
+                      onClick={() => onEdit?.(producer)}>
                       <EditIcon />
                     </IconButton>
 
                     <IconButton
                       aria-label="delete"
                       sx={{ color: red[500] }}
-                      onClick={() => handleRemoveClick(reason)}>
+                      onClick={() => handleRemoveClick(producer)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -99,10 +102,10 @@ export default function ReasonTable({ reasonList, onEdit, onRemove }: ReasonTabl
       <CommonDialog
         open={open}
         onClose={toggle}
-        item={selectedReason}
+        item={selectedProducer}
         onConfirm={handleRemoveConfirm}
-        mainMessage={'Xóa banner'}
-        subMessage={'Bạn có muốn xóa banner không?'}
+        mainMessage={'Xóa producer'}
+        subMessage={'Bạn có muốn xóa producer không?'}
       />
     </>
   );

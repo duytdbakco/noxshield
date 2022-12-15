@@ -7,11 +7,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import { Reason } from 'models/reason';
-import reasonApi from 'api/reasonApi';
-import { reasonActions, selectReasonFilter } from '../reasonSlice';
-export interface ReasonFormProps {
-  initialValues?: Reason;
+import { Producer } from 'models/producer';
+import producerApi from 'api/producerApi';
+import { producerActions, selectProducerFilter } from '../producerSlice';
+export interface ProducerFormProps {
+  initialValues?: Producer;
   onClose: () => void;
 }
 
@@ -21,36 +21,36 @@ const schema = yup.object().shape({
   desc: yup.string().required('Vui lòng nhập mô tả'),
 });
 
-export default function ReasonForm({ initialValues, onClose }: ReasonFormProps): JSX.Element {
+export default function ProducerForm({ initialValues, onClose }: ProducerFormProps): JSX.Element {
   const [error, setError] = useState<string>('');
   const isEdit = Boolean(initialValues?.id);
   const dispatch = useAppDispatch();
-  const filter = useAppSelector(selectReasonFilter);
+  const filter = useAppSelector(selectProducerFilter);
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<Reason>({
+  } = useForm<Producer>({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
 
-  const handleReasonFormSubmit = async (formValues: Reason) => {
+  const handleProducerFormSubmit = async (formValues: Producer) => {
     if (isEdit) {
-      await reasonApi.update(formValues);
-      toast.success('Cập nhật banner thành công!');
+      await producerApi.update(formValues);
+      toast.success('Cập nhật Producer thành công!');
     } else {
-      await reasonApi.add(formValues);
-      toast.success('Thêm banner thành công!');
+      await producerApi.add(formValues);
+      toast.success('Thêm Producer thành công!');
     }
-    dispatch(reasonActions.fetchReasonList(filter));
+    dispatch(producerActions.fetchProducerList(filter));
     onClose();
   };
 
   return (
     <Box maxWidth={400}>
-      <form onSubmit={handleSubmit(handleReasonFormSubmit)}>
+      <form onSubmit={handleSubmit(handleProducerFormSubmit)}>
         <InputField name="header" control={control} placeholder="Nhập tiêu đề" label="Tiêu đề" />
 
         <InputField name="img" control={control} placeholder="Upload ảnh" label="Ảnh*" />
