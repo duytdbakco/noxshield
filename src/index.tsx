@@ -6,7 +6,10 @@ import App from './App';
 import { store } from './app/store';
 import * as serviceWorker from './serviceWorker';
 import { history } from 'utils';
-
+import { registerLicense } from '@syncfusion/ej2-base';
+registerLicense(
+  'Mgo+DSMBMAY9C3t2VVhjQlFac1lJXGFWf1NpR2NbfU54flBAalhWVAciSV9jS3xSd0dgWX9fc3dSR2JUUA=='
+);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -17,7 +17,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import contentApi from 'api/contentApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -27,6 +27,7 @@ import Popup from 'components/Common/PopUp';
 import { ListParams } from 'models';
 import { Content } from 'models/content';
 import React, { ChangeEvent, DragEvent, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ProducerFilter from '../components/ContentFilter';
 import ProducerForm from '../components/ContentForm';
@@ -139,6 +140,11 @@ export default function ContentPage() {
     setOpenDrawer(false);
     setSelectedFile(undefined);
   };
+
+  const history = useHistory();
+  const handleSelectContent = (content: Content) => {
+    history.push(`/content/detail/${content.id}`);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -188,6 +194,7 @@ export default function ContentPage() {
           contentList={contentList}
           onEdit={handleEditContent}
           onRemove={handleRemoveContent}
+          onSelectContent={handleSelectContent}
         />
 
         <Box my={2} display="flex" justifyContent="space-between" alignItems="center">

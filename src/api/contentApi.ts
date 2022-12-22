@@ -16,9 +16,8 @@ const contentApi = {
     return axiosClient.post(apiLinks.content, data);
   },
 
-  update(data: Partial<Content>): Promise<Content> {
-    const url = `${apiLinks.content}`;
-    return axiosClient.put(url, data);
+  update(data: any, id?: any): Promise<Content> {
+    return axiosClient.put(`${apiLinks.content}/${id}`, data);
   },
 
   remove(id: string): Promise<any> {

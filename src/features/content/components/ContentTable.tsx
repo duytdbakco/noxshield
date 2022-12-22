@@ -13,6 +13,7 @@ import CommonDialog from 'components/Common/CommonDialog';
 import { useToggle } from 'hooks';
 import { Content } from 'models/content';
 import { useState } from 'react';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 
 const useStyles = makeStyles((theme: Theme) => ({
   table: {},
@@ -23,11 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export interface ContentTableProps {
   contentList: Content[];
-  onEdit?: (Content: Content) => void;
-  onRemove?: (Content: Content) => void;
+  onEdit?: (content: Content) => void;
+  onRemove?: (content: Content) => void;
+  onSelectContent?: (content: Content) => void;
 }
 
-export default function ContentTable({ contentList, onEdit, onRemove }: ContentTableProps) {
+export default function ContentTable({
+  contentList,
+  onEdit,
+  onRemove,
+  onSelectContent,
+}: ContentTableProps) {
   const classes = useStyles();
   const [open, toggle] = useToggle();
   const [selectedContent, setSelectedContent] = useState<Content>();
@@ -81,6 +88,13 @@ export default function ContentTable({ contentList, onEdit, onRemove }: ContentT
                       sx={{ color: red[500] }}
                       onClick={() => handleRemoveClick(content)}>
                       <DeleteIcon />
+                    </IconButton>
+                    <IconButton
+                      color="primary"
+                      onClick={() => {
+                        onSelectContent?.(content as Content);
+                      }}>
+                      <ReadMoreIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>

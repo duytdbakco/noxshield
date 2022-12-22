@@ -6,6 +6,7 @@ import LoginPage from 'features/auth/pages/LoginPage';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 declare module '@mui/styles/defaultTheme' {
   // tslint:disable-next-line @typescript-eslint/no-empty-interface (remove this line if you don't have the rule enabled)
   interface DefaultTheme extends Theme {}

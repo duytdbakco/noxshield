@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^35.4.0",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^35.4.0",
+    "@ckeditor/ckeditor5-react": "^5.0.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.8",
@@ -11,9 +14,13 @@
     "@mui/material": "^5.3.0",
     "@mui/styles": "^5.3.0",
     "@reduxjs/toolkit": "^1.5.1",
+    "@syncfusion/ej2-react-documenteditor": "^20.3.60",
+    "@syncfusion/ej2-react-richtexteditor": "^20.3.61",
+    "@syncfusion/ej2-richtexteditor": "^20.3.61",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/ckeditor__ckeditor5-core": "^33.0.3",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -60,5 +67,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/ckeditor__ckeditor5-build-classic": "^29.0.1"
   }
 }

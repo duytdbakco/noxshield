@@ -38,7 +38,8 @@ export default function ContentForm({ initialValues, onClose }: ContentFormProps
 
   const handleContentFormSubmit = async (formValues: Content) => {
     if (isEdit) {
-      await contentApi.update(formValues);
+      console.log(formValues?.id);
+      await contentApi.update(formValues?.id && formValues);
       toast.success('Cập nhật content thành công!');
     } else {
       await contentApi.add(formValues);

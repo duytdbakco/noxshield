@@ -4,6 +4,7 @@ import BannerPage from 'features/banner/pages/BannerPage';
 import ProducerPage from 'features/producer/pages/ProducerPage';
 import ContentPage from 'features/content/pages/ContentPage';
 import CasePage from 'features/case/pages/CasePage';
+import DetailPage from 'features/content/pages/DetailPage';
 
 const routes = [
   {
@@ -53,6 +54,14 @@ const routes = [
     layout: null,
     isPrivate: true,
     exact: true,
+  },
+  {
+    key: 'ContentItem',
+    path: '/content/detail/:id',
+    component: DetailPage,
+    layout: null,
+    isPrivate: true,
+    exact: false,
   },
 ];
 

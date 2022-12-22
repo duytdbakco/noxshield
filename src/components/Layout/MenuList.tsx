@@ -25,7 +25,15 @@ export function MenuList() {
   const { handleRouterChange: producer } = useNavigate('/producer');
   const { handleRouterChange: reason } = useNavigate('/reason');
   return (
-    <List component="nav" style={{ height: 'calc(100vh - 65px)', overflow: 'auto' }}>
+    <List
+      component="nav"
+      style={{
+        height: 'calc(100vh - 200px)',
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'space-between',
+      }}>
       <Link to="/banner" onClick={banner}>
         <ListItemButton>
           <ListItemIcon>

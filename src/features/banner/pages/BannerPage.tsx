@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+
 import { Pagination } from '@mui/lab';
 import {
   Box,
@@ -11,11 +11,9 @@ import {
   LinearProgress,
   TablePagination,
   Theme,
-  Toolbar,
-  Tooltip,
   Typography,
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import bannerApi from 'api/bannerApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -29,9 +27,6 @@ import { ListParams } from 'models';
 import { Banner } from 'models/banner';
 import React, { ChangeEvent, DragEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import BannerFilter from '../components/BannerFilter';
-import BannerForm from '../components/BannerForm';
-import BannerTable from '../components/BannerTable';
 import {
   bannerActions,
   selectBannerFilter,
@@ -39,6 +34,9 @@ import {
   selectBannerLoading,
   selectBannerPageCount,
 } from '../bannerSlice';
+import BannerFilter from '../components/BannerFilter';
+import BannerForm from '../components/BannerForm';
+import BannerTable from '../components/BannerTable';
 
 const theme = createTheme({});
 
@@ -165,21 +163,6 @@ export default function BannerPage() {
             direction="row"
             justifyContent="flex-end"
             alignItems="center">
-            <Toolbar>
-              <Grid container direction="row" justifyContent="flex-end" alignItems="center">
-                <Grid item>
-                  <Tooltip title={'Import image'.toString()}>
-                    <IconButton
-                      color="primary"
-                      onClick={() => {
-                        setOpenDrawer(true);
-                      }}>
-                      <UploadFileIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Grid>
-              </Grid>
-            </Toolbar>
             <CommonButton onClick={() => setOpenPopup(true)} variant="contained">
               <AddIcon />
             </CommonButton>
@@ -215,7 +198,6 @@ export default function BannerPage() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Box>
-
         <Drawer
           anchor="right"
           open={openDrawer}
