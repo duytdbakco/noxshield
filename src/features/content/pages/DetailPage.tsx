@@ -1,5 +1,6 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { CKEditor } from 'ckeditor4-react';
 import { ChevronLeft } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -23,8 +24,7 @@ const DetailPage = () => {
       <Button startIcon={<ChevronLeft />} onClick={content}>
         {'Back to content list'}
       </Button>
-
-      <CKEditor
+      {/* <CKEditor
         editor={ClassicEditor}
         config={{
           toolbar: [
@@ -84,7 +84,8 @@ const DetailPage = () => {
         onFocus={(event, editor) => {
           console.log('Focus.', editor);
         }}
-      />
+      /> */}
+      <CKEditor initData="<p>Hello from the first editor working with the context!</p>" />
     </ThemeProvider>
   );
 };
